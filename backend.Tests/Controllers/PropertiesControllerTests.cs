@@ -22,6 +22,80 @@ namespace BackendApi.Tests.Controllers
         }
 
         [Test]
+        public async Task GetAllProperties_ShouldReturn200OK_WithProperties()
+        {
+            // Arrange
+            var propertyDtos = new List<PropertyDto>
+            {
+                new PropertyDto
+                {
+                    Id = 1,
+                    OwnerId = 1,
+                    PropertyTypeId = 1,
+                    PropertyLength = 100m,
+                    PropertyCost = 250000m,
+                    DateOfBuilding = new DateTime(2020, 1, 1),
+                    Country = "USA",
+                    City = "New York",
+                    Owner = new OwnerDto { Id = 1, FirstName = "John", LastName = "Doe", Email = "john@example.com", Phone = "+1234567890" },
+                    PropertyType = new PropertyTypeDto { Id = 1, Type = "residential" }
+                },
+                new PropertyDto
+                {
+                    Id = 2,
+                    OwnerId = 2,
+                    PropertyTypeId = 2,
+                    PropertyLength = 500m,
+                    PropertyCost = 1000000m,
+                    DateOfBuilding = new DateTime(2015, 6, 15),
+                    Country = "UK",
+                    City = "London",
+                    Owner = new OwnerDto { Id = 2, FirstName = "Jane", LastName = "Smith", Email = "jane@example.com", Phone = "+0987654321" },
+                    PropertyType = new PropertyTypeDto { Id = 2, Type = "commercial" }
+                }
+            };
+
+            _propertyServiceMock.Setup(s => s.GetAllPropertiesAsync())
+                .ReturnsAsync(propertyDtos);
+
+            // Act
+            var result = await _controller.GetAllProperties();
+
+            // Assert
+            var okResult = result.Result as OkObjectResult;
+            okResult.Should().NotBeNull();
+            okResult!.StatusCode.Should().Be(200);
+            
+            var returnedProperties = okResult.Value as IEnumerable<PropertyDto>;
+            returnedProperties.Should().NotBeNull();
+            returnedProperties.Should().HaveCount(2);
+            returnedProperties.Should().Contain(p => p.Id == 1 && p.City == "New York");
+            returnedProperties.Should().Contain(p => p.Id == 2 && p.City == "London");
+        }
+
+        [Test]
+        public async Task GetAllProperties_ShouldReturn200OK_WithEmptyList_WhenNoProperties()
+        {
+            // Arrange
+            var emptyList = new List<PropertyDto>();
+
+            _propertyServiceMock.Setup(s => s.GetAllPropertiesAsync())
+                .ReturnsAsync(emptyList);
+
+            // Act
+            var result = await _controller.GetAllProperties();
+
+            // Assert
+            var okResult = result.Result as OkObjectResult;
+            okResult.Should().NotBeNull();
+            okResult!.StatusCode.Should().Be(200);
+            
+            var returnedProperties = okResult.Value as IEnumerable<PropertyDto>;
+            returnedProperties.Should().NotBeNull();
+            returnedProperties.Should().BeEmpty();
+        }
+
+        [Test]
         public async Task CreateProperty_ShouldReturn201Created_WhenValid()
         {
             // Arrange

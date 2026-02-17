@@ -17,6 +17,13 @@ namespace BackendApi.Controllers
             _propertyService = propertyService;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<PropertyDto>>> GetAllProperties()
+        {
+            var properties = await _propertyService.GetAllPropertiesAsync();
+            return Ok(properties);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<PropertyDto>> GetProperty(int id)
         {
