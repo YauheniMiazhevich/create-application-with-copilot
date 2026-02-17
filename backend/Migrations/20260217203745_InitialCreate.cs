@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BackendApi.Migrations
 {
     /// <inheritdoc />
-    public partial class AddIdentity : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -159,48 +159,6 @@ namespace BackendApi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.UpdateData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: 1,
-                columns: new[] { "CreatedAt", "UpdatedAt" },
-                values: new object[] { new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1816), new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1817) });
-
-            migrationBuilder.UpdateData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: 2,
-                columns: new[] { "CreatedAt", "UpdatedAt" },
-                values: new object[] { new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1819), new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1819) });
-
-            migrationBuilder.UpdateData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: 3,
-                columns: new[] { "CreatedAt", "UpdatedAt" },
-                values: new object[] { new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1820), new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1820) });
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 1,
-                columns: new[] { "CreatedAt", "UpdatedAt" },
-                values: new object[] { new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1924), new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1925) });
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 2,
-                columns: new[] { "CreatedAt", "UpdatedAt" },
-                values: new object[] { new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1926), new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1926) });
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 3,
-                columns: new[] { "CreatedAt", "UpdatedAt" },
-                values: new object[] { new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1927), new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1928) });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -262,48 +220,6 @@ namespace BackendApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.UpdateData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: 1,
-                columns: new[] { "CreatedAt", "UpdatedAt" },
-                values: new object[] { new DateTime(2026, 2, 16, 19, 0, 49, 666, DateTimeKind.Utc).AddTicks(2069), new DateTime(2026, 2, 16, 19, 0, 49, 666, DateTimeKind.Utc).AddTicks(2070) });
-
-            migrationBuilder.UpdateData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: 2,
-                columns: new[] { "CreatedAt", "UpdatedAt" },
-                values: new object[] { new DateTime(2026, 2, 16, 19, 0, 49, 666, DateTimeKind.Utc).AddTicks(2072), new DateTime(2026, 2, 16, 19, 0, 49, 666, DateTimeKind.Utc).AddTicks(2072) });
-
-            migrationBuilder.UpdateData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: 3,
-                columns: new[] { "CreatedAt", "UpdatedAt" },
-                values: new object[] { new DateTime(2026, 2, 16, 19, 0, 49, 666, DateTimeKind.Utc).AddTicks(2073), new DateTime(2026, 2, 16, 19, 0, 49, 666, DateTimeKind.Utc).AddTicks(2074) });
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 1,
-                columns: new[] { "CreatedAt", "UpdatedAt" },
-                values: new object[] { new DateTime(2026, 2, 16, 19, 0, 49, 666, DateTimeKind.Utc).AddTicks(2150), new DateTime(2026, 2, 16, 19, 0, 49, 666, DateTimeKind.Utc).AddTicks(2150) });
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 2,
-                columns: new[] { "CreatedAt", "UpdatedAt" },
-                values: new object[] { new DateTime(2026, 2, 16, 19, 0, 49, 666, DateTimeKind.Utc).AddTicks(2152), new DateTime(2026, 2, 16, 19, 0, 49, 666, DateTimeKind.Utc).AddTicks(2152) });
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 3,
-                columns: new[] { "CreatedAt", "UpdatedAt" },
-                values: new object[] { new DateTime(2026, 2, 16, 19, 0, 49, 666, DateTimeKind.Utc).AddTicks(2153), new DateTime(2026, 2, 16, 19, 0, 49, 666, DateTimeKind.Utc).AddTicks(2153) });
         }
     }
 }

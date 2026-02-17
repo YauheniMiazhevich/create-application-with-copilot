@@ -44,7 +44,7 @@ function LoginRegister() {
       }
 
       if (result.success) {
-        navigate('/products');
+        navigate('/dashboard');
       } else {
         setError(result.error);
       }

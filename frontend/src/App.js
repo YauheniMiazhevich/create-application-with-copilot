@@ -5,7 +5,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 import Header from './components/Header';
 import LoginRegister from './components/Auth/LoginRegister';
-import ProductList from './components/ProductList';
+import Dashboard from './components/Dashboard';
 
 function App() {
   return (
@@ -16,16 +16,16 @@ function App() {
           <Routes>
             <Route path="/login" element={<LoginRegister />} />
             <Route 
-              path="/products" 
+              path="/dashboard" 
               element={
                 <PrivateRoute>
                   <main className="main-content">
-                    <ProductList />
+                    <Dashboard />
                   </main>
                 </PrivateRoute>
               } 
             />
-            <Route path="/" element={<Navigate to="/products" replace />} />
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </div>
       </AuthProvider>

@@ -37,22 +37,4 @@ api.interceptors.response.use(
   }
 );
 
-// Products API
-export const productsApi = {
-  getAll: () => api.get('/products'),
-  getById: (id) => api.get(`/products/${id}`),
-  create: (product) => api.post('/products', product),
-  update: (id, product) => api.put(`/products/${id}`, product),
-  delete: (id) => api.delete(`/products/${id}`),
-};
-
-// Categories API
-export const categoriesApi = {
-  getAll: () => api.get('/categories'),
-  getById: (id) => api.get(`/categories/${id}`),
-  create: (category) => api.post('/categories', category),
-  update: (id, category) => api.put(`/categories/${id}`, category),
-  delete: (id) => api.delete(`/categories/${id}`),
-};
-
 export default api;
