@@ -20,10 +20,7 @@ function Header() {
     <header className="app-header">
       <div className="header-content">
         <div className="header-left">
-          <h1>Product Management</h1>
-          <nav>
-            <Link to="/products">Products</Link>
-          </nav>
+          <h1>Property Management</h1>
         </div>
         <div className="header-right">
           <span className="user-info">

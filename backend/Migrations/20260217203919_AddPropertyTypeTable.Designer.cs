@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BackendApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260216202201_AddIdentity")]
-    partial class AddIdentity
+    [Migration("20260217203919_AddPropertyTypeTable")]
+    partial class AddPropertyTypeTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -95,7 +95,7 @@ namespace BackendApi.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("BackendApi.Models.Category", b =>
+            modelBuilder.Entity("BackendApi.Models.PropertyType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -103,125 +103,40 @@ namespace BackendApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
+                    b.Property<string>("Type")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("PropertyType", "Property");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1816),
-                            Description = "Electronic devices and accessories",
-                            Name = "Electronics",
-                            UpdatedAt = new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1817)
+                            Type = "residential"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1819),
-                            Description = "Books and publications",
-                            Name = "Books",
-                            UpdatedAt = new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1819)
+                            Type = "commercial"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1820),
-                            Description = "Apparel and fashion items",
-                            Name = "Clothing",
-                            UpdatedAt = new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1820)
-                        });
-                });
-
-            modelBuilder.Entity("BackendApi.Models.Product", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Stock")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 1,
-                            CreatedAt = new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1924),
-                            Description = "High-performance laptop",
-                            Name = "Laptop",
-                            Price = 999.99m,
-                            Stock = 15,
-                            UpdatedAt = new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1925)
+                            Type = "industrial"
                         },
                         new
                         {
-                            Id = 2,
-                            CategoryId = 1,
-                            CreatedAt = new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1926),
-                            Description = "Latest smartphone model",
-                            Name = "Smartphone",
-                            Price = 699.99m,
-                            Stock = 25,
-                            UpdatedAt = new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1926)
+                            Id = 4,
+                            Type = "raw land"
                         },
                         new
                         {
-                            Id = 3,
-                            CategoryId = 2,
-                            CreatedAt = new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1927),
-                            Description = "Learn programming fundamentals",
-                            Name = "Programming Book",
-                            Price = 49.99m,
-                            Stock = 50,
-                            UpdatedAt = new DateTime(2026, 2, 16, 20, 22, 0, 984, DateTimeKind.Utc).AddTicks(1928)
+                            Id = 5,
+                            Type = "special purpose"
                         });
                 });
 
@@ -357,17 +272,6 @@ namespace BackendApi.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("BackendApi.Models.Product", b =>
-                {
-                    b.HasOne("BackendApi.Models.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -417,11 +321,6 @@ namespace BackendApi.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BackendApi.Models.Category", b =>
-                {
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

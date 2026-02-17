@@ -5,11 +5,32 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using BackendApi.Data;
 using BackendApi.Models;
+using BackendApi.Interfaces;
+using BackendApi.Repositories;
+using BackendApi.Services;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+// Add FluentValidation
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
+// Register Repositories
+builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<IPropertyRepository, PropertyRepository>();
+builder.Services.AddScoped<IPropertyTypeRepository, PropertyTypeRepository>();
+
+// Register Services
+builder.Services.AddScoped<IOwnerService, OwnerService>();
+builder.Services.AddScoped<ICompanyService, CompanyService>();
+builder.Services.AddScoped<IPropertyService, PropertyService>();
+builder.Services.AddScoped<IPropertyTypeService, PropertyTypeService>();
 
 // Configure Database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
