@@ -30,6 +30,7 @@ builder.Services.AddScoped<IPropertyTypeRepository, PropertyTypeRepository>();
 builder.Services.AddScoped<IOwnerService, OwnerService>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IPropertyService, PropertyService>();
+builder.Services.AddScoped<IPropertyTypeService, PropertyTypeService>();
 
 // Configure Database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
