@@ -10,24 +10,18 @@ namespace BackendApi.Controllers
     [Authorize]
     public class PropertyTypesController : ControllerBase
     {
-        private readonly IPropertyTypeRepository _propertyTypeRepository;
+        private readonly IPropertyTypeService _propertyTypeService;
 
-        public PropertyTypesController(IPropertyTypeRepository propertyTypeRepository)
+        public PropertyTypesController(IPropertyTypeService propertyTypeService)
         {
-            _propertyTypeRepository = propertyTypeRepository;
+            _propertyTypeService = propertyTypeService;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PropertyTypeDto>>> GetAllPropertyTypes()
         {
-            var propertyTypes = await _propertyTypeRepository.GetAllAsync();
-            var propertyTypeDtos = propertyTypes.Select(pt => new PropertyTypeDto
-            {
-                Id = pt.Id,
-                Type = pt.Type
-            });
-
-            return Ok(propertyTypeDtos);
+            var propertyTypes = await _propertyTypeService.GetAllPropertyTypesAsync();
+            return Ok(propertyTypes);
         }
     }
 }
