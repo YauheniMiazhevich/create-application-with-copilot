@@ -81,11 +81,11 @@ namespace BackendApi.Data
 
             // Seed PropertyType data
             modelBuilder.Entity<PropertyType>().HasData(
-                new PropertyType { Id = 1, Type = "residential" },
-                new PropertyType { Id = 2, Type = "commercial" },
-                new PropertyType { Id = 3, Type = "industrial" },
-                new PropertyType { Id = 4, Type = "raw land" },
-                new PropertyType { Id = 5, Type = "special purpose" }
+                new PropertyType { Id = 1, Type = "Residential" },
+                new PropertyType { Id = 2, Type = "Commercial" },
+                new PropertyType { Id = 3, Type = "Industrial" },
+                new PropertyType { Id = 4, Type = "Raw Land" },
+                new PropertyType { Id = 5, Type = "Special Purpose" }
             );
         }
     }

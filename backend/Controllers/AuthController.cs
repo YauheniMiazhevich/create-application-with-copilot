@@ -39,7 +39,7 @@ namespace BackendApi.Controllers
 
             var user = new ApplicationUser
             {
-                UserName = registerDto.Email,
+                UserName = registerDto.Email.Split('@')[0],
                 Email = registerDto.Email,
                 CreatedAt = DateTime.UtcNow
             };
@@ -115,10 +115,22 @@ namespace BackendApi.Controllers
             {
                 Id = user.Id,
                 Email = user.Email!,
+                UserName = user.UserName!,
                 Roles = roles.ToList(),
                 CreatedAt = user.CreatedAt,
                 LastLoginAt = user.LastLoginAt
             });
+        }
+
+        // POST: api/auth/logout
+        [HttpPost("logout")]
+        [Authorize]
+        public IActionResult Logout()
+        {
+            // JWT is stateless; actual token invalidation is handled client-side.
+            // This endpoint provides a server-side contract for logout and serves
+            // as a hook for future token blacklisting if required.
+            return Ok(new { message = "Logged out successfully" });
         }
 
         private async Task<AuthResponseDto> GenerateJwtToken(ApplicationUser user)
@@ -158,6 +170,7 @@ namespace BackendApi.Controllers
             {
                 Token = tokenString,
                 Email = user.Email!,
+                UserName = user.UserName!,
                 Roles = roles.ToList(),
                 ExpiresAt = expiresAt
             };

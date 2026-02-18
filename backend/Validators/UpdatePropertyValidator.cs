@@ -7,6 +7,10 @@ namespace BackendApi.Validators
     {
         public UpdatePropertyValidator()
         {
+            RuleFor(x => x.OwnerId)
+                .GreaterThan(0).WithMessage("Owner ID must be greater than 0")
+                .When(x => x.OwnerId.HasValue);
+
             RuleFor(x => x.PropertyTypeId)
                 .GreaterThan(0).WithMessage("Property Type ID must be greater than 0")
                 .When(x => x.PropertyTypeId.HasValue);
