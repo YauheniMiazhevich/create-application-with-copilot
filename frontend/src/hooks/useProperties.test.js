@@ -139,9 +139,16 @@ describe('useProperties', () => {
 
       const { result } = renderHook(() => useProperties());
 
-      await expect(act(async () => {
-        await result.current.updateProperty(1, {});
-      })).rejects.toThrow();
+      await act(async () => {
+        try {
+          await result.current.updateProperty(1, {});
+        } catch (e) {}
+      });
+
+      await waitFor(() => {
+        expect(result.current.error).toBe('Update failed');
+        expect(result.current.loading).toBe(false);
+      });
     });
   });
 
@@ -176,9 +183,16 @@ describe('useProperties', () => {
 
       const { result } = renderHook(() => useProperties());
 
-      await expect(act(async () => {
-        await result.current.deleteProperty(1);
-      })).rejects.toThrow();
+      await act(async () => {
+        try {
+          await result.current.deleteProperty(1);
+        } catch (e) {}
+      });
+
+      await waitFor(() => {
+        expect(result.current.error).toBe('Cannot delete');
+        expect(result.current.loading).toBe(false);
+      });
     });
   });
 });

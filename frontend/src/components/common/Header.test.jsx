@@ -54,9 +54,9 @@ describe('Header', () => {
     expect(screen.getByText('Property Management')).toBeInTheDocument();
   });
 
-  it('should render the user email when authenticated', () => {
+  it('should render the username when authenticated', () => {
     useAuth.mockReturnValue({
-      user: { email: 'test@example.com', roles: ['User'] },
+      user: { email: 'test@example.com', userName: 'testuser', roles: ['User'] },
       isAuthenticated: true,
       logout: mockLogout
     });
@@ -67,7 +67,7 @@ describe('Header', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText(/test@example\.com/)).toBeInTheDocument();
+    expect(screen.getByText('testuser')).toBeInTheDocument();
   });
 
   it('should render the Logout button when authenticated', () => {

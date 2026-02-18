@@ -21,7 +21,7 @@ const Header = () => {
       <div className="page-header-content">
         <h1 className="page-header-title">Property Management</h1>
         <div className="page-header-user">
-          <span className="page-header-email">{user?.userName}</span>
+          <span className="page-header-name">{user?.userName}</span>
           <button onClick={handleLogout} className="page-header-logout">
             Logout
           </button>

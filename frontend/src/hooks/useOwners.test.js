@@ -36,13 +36,9 @@ describe('useOwners', () => {
 
       const { result } = renderHook(() => useOwners());
 
-      try {
-        await act(async () => {
-          await result.current.fetchOwners();
-        });
-      } catch (error) {
-        // Expected to throw
-      }
+      await act(async () => {
+        await result.current.fetchOwners();
+      });
 
       await waitFor(() => {
         expect(result.current.error).toBe('Fetch failed');
@@ -72,9 +68,14 @@ describe('useOwners', () => {
 
       const { result } = renderHook(() => useOwners());
 
-      await expect(act(async () => {
+      await act(async () => {
         await result.current.fetchOwnerById(999);
-      })).rejects.toThrow();
+      });
+
+      await waitFor(() => {
+        expect(result.current.error).toBe('Not found');
+        expect(result.current.loading).toBe(false);
+      });
     });
 
     it('should set loading state during fetch', async () => {
@@ -119,9 +120,14 @@ describe('useOwners', () => {
 
       const { result } = renderHook(() => useOwners());
 
-      await expect(act(async () => {
+      await act(async () => {
         await result.current.createOwner({});
-      })).rejects.toThrow();
+      });
+
+      await waitFor(() => {
+        expect(result.current.error).toBe('Create failed');
+        expect(result.current.loading).toBe(false);
+      });
     });
   });
 
@@ -157,9 +163,14 @@ describe('useOwners', () => {
 
       const { result } = renderHook(() => useOwners());
 
-      await expect(act(async () => {
+      await act(async () => {
         await result.current.updateOwner(1, {});
-      })).rejects.toThrow();
+      });
+
+      await waitFor(() => {
+        expect(result.current.error).toBe('Update failed');
+        expect(result.current.loading).toBe(false);
+      });
     });
   });
 });
