@@ -218,6 +218,123 @@ namespace BackendApi.Tests.Services
         }
 
         [Test]
+        public void UpdatePropertyAsync_ShouldThrowException_WhenOwnerNotFound()
+        {
+            // Arrange
+            var existingProperty = new Property
+            {
+                Id = 1,
+                OwnerId = 1,
+                PropertyTypeId = 1,
+                PropertyLength = 100m,
+                PropertyCost = 200000m,
+                DateOfBuilding = new DateTime(2010, 1, 1),
+                Country = "USA",
+                City = "Original City",
+                Owner = new Owner { Id = 1, FirstName = "Bob", LastName = "Johnson", Email = "bob@example.com", Phone = "+1111111111" },
+                PropertyType = new PropertyType { Id = 1, Type = "residential" }
+            };
+
+            var updateDto = new UpdatePropertyDto { OwnerId = 999 };
+
+            _propertyRepositoryMock.Setup(r => r.GetByIdAsync(1))
+                .ReturnsAsync(existingProperty);
+
+            _ownerRepositoryMock.Setup(r => r.ExistsAsync(999))
+                .ReturnsAsync(false);
+
+            // Act & Assert
+            Assert.ThrowsAsync<ArgumentException>(async () =>
+                await _service.UpdatePropertyAsync(1, updateDto));
+        }
+
+        [Test]
+        public void UpdatePropertyAsync_ShouldThrowException_WhenPropertyTypeNotFound()
+        {
+            // Arrange
+            var existingProperty = new Property
+            {
+                Id = 1,
+                OwnerId = 1,
+                PropertyTypeId = 1,
+                PropertyLength = 100m,
+                PropertyCost = 200000m,
+                DateOfBuilding = new DateTime(2010, 1, 1),
+                Country = "USA",
+                City = "Original City",
+                Owner = new Owner { Id = 1, FirstName = "Bob", LastName = "Johnson", Email = "bob@example.com", Phone = "+1111111111" },
+                PropertyType = new PropertyType { Id = 1, Type = "residential" }
+            };
+
+            var updateDto = new UpdatePropertyDto { PropertyTypeId = 999 };
+
+            _propertyRepositoryMock.Setup(r => r.GetByIdAsync(1))
+                .ReturnsAsync(existingProperty);
+
+            _propertyTypeRepositoryMock.Setup(r => r.ExistsAsync(999))
+                .ReturnsAsync(false);
+
+            // Act & Assert
+            Assert.ThrowsAsync<ArgumentException>(async () =>
+                await _service.UpdatePropertyAsync(1, updateDto));
+        }
+
+        [Test]
+        public async Task UpdatePropertyAsync_ShouldUpdateOwnerId_WhenOwnerExists()
+        {
+            // Arrange
+            var existingProperty = new Property
+            {
+                Id = 1,
+                OwnerId = 1,
+                PropertyTypeId = 1,
+                PropertyLength = 100m,
+                PropertyCost = 200000m,
+                DateOfBuilding = new DateTime(2010, 1, 1),
+                Country = "USA",
+                City = "Original City",
+                Owner = new Owner { Id = 1, FirstName = "Bob", LastName = "Johnson", Email = "bob@example.com", Phone = "+1111111111" },
+                PropertyType = new PropertyType { Id = 1, Type = "residential" }
+            };
+
+            var updatedProperty = new Property
+            {
+                Id = 1,
+                OwnerId = 2,
+                PropertyTypeId = 1,
+                PropertyLength = 100m,
+                PropertyCost = 200000m,
+                DateOfBuilding = new DateTime(2010, 1, 1),
+                Country = "USA",
+                City = "Original City",
+                Owner = new Owner { Id = 2, FirstName = "Alice", LastName = "Smith", Email = "alice@example.com", Phone = "+2222222222" },
+                PropertyType = new PropertyType { Id = 1, Type = "residential" }
+            };
+
+            var updateDto = new UpdatePropertyDto { OwnerId = 2 };
+
+            _propertyRepositoryMock.Setup(r => r.GetByIdAsync(1))
+                .ReturnsAsync(existingProperty);
+
+            _ownerRepositoryMock.Setup(r => r.ExistsAsync(2))
+                .ReturnsAsync(true);
+
+            _propertyRepositoryMock.Setup(r => r.UpdateAsync(It.IsAny<Property>()))
+                .ReturnsAsync((Property p) => p);
+
+            _propertyRepositoryMock.SetupSequence(r => r.GetByIdAsync(1))
+                .ReturnsAsync(existingProperty)
+                .ReturnsAsync(updatedProperty);
+
+            // Act
+            var result = await _service.UpdatePropertyAsync(1, updateDto);
+
+            // Assert
+            result.Should().NotBeNull();
+            result!.Owner.Id.Should().Be(2);
+        }
+
+        [Test]
         public async Task DeletePropertyAsync_ShouldReturnTrue_WhenSuccessful()
         {
             // Arrange

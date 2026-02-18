@@ -53,11 +53,15 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var secretKey = jwtSettings["SecretKey"];
 
-builder.Services.AddAuthentication(options =>
+// Override the schemes set by AddIdentity so JWT is used instead of cookies
+builder.Services.Configure<Microsoft.AspNetCore.Authentication.AuthenticationOptions>(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+});
+
+builder.Services.AddAuthentication()
 .AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
@@ -96,6 +100,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         await DbSeeder.SeedRolesAndAdminAsync(services);
+        await DbSeeder.SeedMockDataAsync(services);
     }
     catch (Exception ex)
     {

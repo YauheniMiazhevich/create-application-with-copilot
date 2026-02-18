@@ -2,6 +2,7 @@ namespace BackendApi.Models.DTOs
 {
     public class UpdatePropertyDto
     {
+        public int? OwnerId { get; set; }
         public int? PropertyTypeId { get; set; }
         public decimal? PropertyLength { get; set; }
         public decimal? PropertyCost { get; set; }
