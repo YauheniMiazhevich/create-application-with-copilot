@@ -50,7 +50,7 @@ namespace BackendApi.Services
                 PropertyTypeId = createPropertyDto.PropertyTypeId,
                 PropertyLength = createPropertyDto.PropertyLength,
                 PropertyCost = createPropertyDto.PropertyCost,
-                DateOfBuilding = createPropertyDto.DateOfBuilding,
+                DateOfBuilding = DateTime.SpecifyKind(createPropertyDto.DateOfBuilding, DateTimeKind.Utc),
                 Description = createPropertyDto.Description,
                 Country = createPropertyDto.Country,
                 City = createPropertyDto.City,
@@ -71,6 +71,16 @@ namespace BackendApi.Services
             if (property == null)
                 return null;
 
+            // Validate that owner exists if it's being updated
+            if (updatePropertyDto.OwnerId.HasValue)
+            {
+                var ownerExists = await _ownerRepository.ExistsAsync(updatePropertyDto.OwnerId.Value);
+                if (!ownerExists)
+                    throw new ArgumentException($"Owner with ID {updatePropertyDto.OwnerId.Value} not found");
+
+                property.OwnerId = updatePropertyDto.OwnerId.Value;
+            }
+
             // Validate property type if it's being updated
             if (updatePropertyDto.PropertyTypeId.HasValue)
             {
@@ -88,7 +98,7 @@ namespace BackendApi.Services
                 property.PropertyCost = updatePropertyDto.PropertyCost.Value;
             
             if (updatePropertyDto.DateOfBuilding.HasValue)
-                property.DateOfBuilding = updatePropertyDto.DateOfBuilding.Value;
+                property.DateOfBuilding = DateTime.SpecifyKind(updatePropertyDto.DateOfBuilding.Value, DateTimeKind.Utc);
             
             if (updatePropertyDto.Description != null)
                 property.Description = updatePropertyDto.Description;
