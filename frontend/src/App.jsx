@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import { AuthProvider } from './contexts/AuthContext.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
-import Header from './components/Header.jsx';
+import Header from './components/common/Header.jsx';
 import LoginRegister from './components/Auth/LoginRegister.jsx';
 import RealEstateMain from './components/RealEstateMain.jsx';
 
@@ -13,21 +13,19 @@ function App() {
       <AuthProvider>
         <div className="App">
           <Routes>
-            <Route path="/login" element={
-              <>
-                <Header />
-                <LoginRegister />
-              </>
-            } />
-            <Route 
-              path="/dashboard" 
+            <Route path="/login" element={<LoginRegister />} />
+            <Route
+              path="/"
               element={
                 <PrivateRoute>
-                  <RealEstateMain />
+                  <>
+                    <Header />
+                    <RealEstateMain />
+                  </>
                 </PrivateRoute>
-              } 
+              }
             />
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
       </AuthProvider>

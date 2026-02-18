@@ -29,9 +29,15 @@ export const authService = {
   },
 
   // Logout user
-  logout() {
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(USER_KEY);
+  async logout() {
+    try {
+      await api.post('/auth/logout');
+    } catch {
+      // Ignore errors - token may already be expired; proceed with local cleanup
+    } finally {
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(USER_KEY);
+    }
   },
 
   // Get current user

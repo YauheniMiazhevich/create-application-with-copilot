@@ -44,7 +44,7 @@ function LoginRegister() {
       }
 
       if (result.success) {
-        navigate('/dashboard');
+        navigate('/');
       } else {
         setError(result.error);
       }
@@ -137,6 +137,14 @@ function LoginRegister() {
             <p><strong>Demo Admin Account:</strong></p>
             <p>Email: admin@backendapi.com</p>
             <p>Password: Admin123!</p>
+          </div>
+        )}
+
+        {isLogin && (
+          <div className="demo-credentials">
+            <p><strong>Demo User Account:</strong></p>
+            <p>Email: user@backendapi.com</p>
+            <p>Password: User123!</p>
           </div>
         )}
       </div>

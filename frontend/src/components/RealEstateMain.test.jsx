@@ -97,11 +97,10 @@ describe('RealEstateMain', () => {
     window.confirm = vi.fn(() => true);
   });
 
-  it('should render header with user information', () => {
+  it('should render the properties section', () => {
     render(<RealEstateMain />);
 
-    expect(screen.getByText('Real Estate Main')).toBeInTheDocument();
-    expect(screen.getByText('user@example.com')).toBeInTheDocument();
+    expect(screen.getByLabelText('Properties list')).toBeInTheDocument();
   });
 
   it('should fetch properties on mount', () => {

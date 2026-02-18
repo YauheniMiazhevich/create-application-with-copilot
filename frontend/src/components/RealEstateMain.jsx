@@ -4,7 +4,6 @@ import useProperties from '../hooks/useProperties';
 import usePropertyTypes from '../hooks/usePropertyTypes';
 import useOwners from '../hooks/useOwners';
 import ErrorBoundary from './common/ErrorBoundary.jsx';
-import Header from './common/Header.jsx';
 import LoadingSpinner from './common/LoadingSpinner.jsx';
 import ErrorMessage from './common/ErrorMessage.jsx';
 import Sidebar from './Sidebar/Sidebar.jsx';
@@ -158,8 +157,6 @@ const RealEstateMain = () => {
   return (
     <ErrorBoundary>
       <div className="real-estate-main">
-        <Header user={user} />
-        
         <div className="real-estate-layout">
           <Sidebar 
             isAdmin={isAdmin}
