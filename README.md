@@ -86,7 +86,25 @@ cp .env.example .env
 # Start the React development server
 npm start
 ```
-Default Login Credentials
+
+### 5. Running Tests
+
+**Frontend Unit Tests (Vitest):**
+
+# Run all tests (single run)
+npm test -- --run
+
+# Run tests in watch mode
+npm test
+
+# Run tests with UI
+npm run test:ui
+
+# Run tests with coverage report
+npm run test:coverage
+```
+
+## Default Login Credentials
 
 After running migrations, the following admin account is automatically created:
 

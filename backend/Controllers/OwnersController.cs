@@ -17,6 +17,13 @@ namespace BackendApi.Controllers
             _ownerService = ownerService;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<OwnerDto>>> GetAllOwners()
+        {
+            var owners = await _ownerService.GetAllOwnersAsync();
+            return Ok(owners);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<OwnerDto>> GetOwner(int id)
         {
