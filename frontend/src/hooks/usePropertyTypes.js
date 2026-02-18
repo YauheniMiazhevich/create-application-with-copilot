@@ -16,7 +16,6 @@ const usePropertyTypes = () => {
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message || 'Failed to fetch property types';
       setError(errorMessage);
-      throw new Error(errorMessage);
     } finally {
       setLoading(false);
     }

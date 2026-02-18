@@ -30,7 +30,6 @@ const useOwners = () => {
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message || 'Failed to fetch owner';
       setError(errorMessage);
-      throw new Error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -46,7 +45,6 @@ const useOwners = () => {
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message || 'Failed to create owner';
       setError(errorMessage);
-      throw new Error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -62,7 +60,6 @@ const useOwners = () => {
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message || 'Failed to update owner';
       setError(errorMessage);
-      throw new Error(errorMessage);
     } finally {
       setLoading(false);
     }

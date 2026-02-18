@@ -44,7 +44,6 @@ const useProperties = () => {
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message || 'Failed to update property';
       setError(errorMessage);
-      throw new Error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -60,7 +59,6 @@ const useProperties = () => {
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message || 'Failed to delete property';
       setError(errorMessage);
-      throw new Error(errorMessage);
     } finally {
       setLoading(false);
     }
