@@ -1,0 +1,22 @@
+# Build outputs
+bin/
+obj/
+
+# Environment / secrets
+.env
+.env.*
+appsettings.Development.json
+
+# IDE and OS
+.vscode/
+.idea/
+*.user
+*.suo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Test project (tests run in the build stage from the repo root context)
+# This file is scoped to backend/ context – tests live in ../backend.Tests/

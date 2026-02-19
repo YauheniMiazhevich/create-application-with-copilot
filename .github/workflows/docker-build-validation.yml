@@ -1,0 +1,59 @@
+name: Docker Build Validation
+
+# Run on every pull request (opened, updated, or reopened).
+# Both Dockerfiles run unit tests inside the build stages, so a successful
+# build guarantees all tests pass:
+#   - Backend:  91 NUnit tests (backend.Tests/)
+#   - Frontend: 182 Vitest tests (src/**/*.test.{js,jsx})
+on:
+  pull_request:
+    branches:
+      - "**"
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build-backend:
+    name: Build Backend Image (incl. unit tests)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build backend image
+        uses: docker/build-push-action@v6
+        with:
+          # Build context is the workspace root so both backend/ and
+          # backend.Tests/ are available to the multi-stage Dockerfile.
+          context: .
+          file: backend/Dockerfile
+          # Do not push – validation only
+          push: false
+          # Cache layers between runs to speed up subsequent PR builds
+          cache-from: type=gha,scope=backend
+          cache-to: type=gha,mode=max,scope=backend
+
+  build-frontend:
+    name: Build Frontend Image (incl. unit tests)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build frontend image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          file: frontend/Dockerfile
+          push: false
+          # Use a placeholder API URL for the build-time ARG (value does not
+          # matter for build validation; it is only baked into the JS bundle).
+          build-args: |
+            REACT_APP_API_URL=http://localhost:5272/api
+          cache-from: type=gha,scope=frontend
+          cache-to: type=gha,mode=max,scope=frontend
