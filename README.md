@@ -1,7 +1,7 @@
 # 1. Working project
 
 ## Run project
-To run a project read instructions from [README.runproject.md](README.runproject.md)
+To run a project read instructions from [Runproject.md](Runproject.md)
 
 ## APP Overwiew
 Real Estate manager that allows to browse properties and with admin role allows to manage property and owners records
