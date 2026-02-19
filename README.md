@@ -27,7 +27,109 @@ A full-stack web application built with ASP.NET Core Web API (.NET 8) backend an
 - [PostgreSQL](https://www.postgresql.org/download/) (v12 or higher)
 - [Git](https://git-scm.com/)
 
-## Setup Instructions
+---
+
+## Running with Docker (Recommended)
+
+Docker is the fastest way to get the full stack running. It starts PostgreSQL, the .NET backend, and the React frontend — all pre-configured and wired together. Unit tests run automatically inside the image builds; a failing test will abort the build before any container is started.
+
+### Prerequisites
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (includes Docker Compose)
+
+### 1. Build the images
+
+Unit tests (91 NUnit backend tests + 182 Vitest frontend tests) run **inside** the build. If any test fails, the build stops before a broken image is produced.
+
+```bash
+docker compose build
+```
+
+To rebuild from scratch (ignoring the layer cache):
+
+```bash
+docker compose build --no-cache
+```
+
+### 2. Start the stack
+
+```bash
+docker compose up -d
+```
+
+This starts three containers:
+
+| Service | URL | Notes |
+|---|---|---|
+| `frontend` | <http://localhost:3000> | React app (nginx) |
+| `backend` | <http://localhost:5272> | ASP.NET Core API |
+| `db` | internal only | PostgreSQL 16 (not exposed to host) |
+
+Migrations are applied and seed data is loaded automatically on first start.
+
+### 3. Verify everything is healthy
+
+```bash
+docker compose ps
+```
+
+All three services should show `(healthy)` within ~30 seconds. You can also probe the endpoints directly:
+
+```bash
+# Backend health
+curl http://localhost:5272/health
+
+# Swagger UI
+open http://localhost:5272/swagger
+
+# Frontend
+open http://localhost:3000
+```
+
+### 4. View logs
+
+```bash
+# All services
+docker compose logs -f
+
+# Single service
+docker compose logs -f backend
+docker compose logs -f frontend
+```
+
+### 5. Stop the stack
+
+```bash
+# Stop containers (data is preserved in the named volume)
+docker compose down
+
+# Stop and remove all data (full reset)
+docker compose down -v
+```
+
+### Rebuilding after code changes
+
+After changing backend or frontend source, rebuild only the affected service:
+
+```bash
+docker compose build backend
+docker compose up -d backend
+
+# or for frontend
+docker compose build frontend
+docker compose up -d frontend
+```
+
+### Passing a custom API URL to the frontend
+
+The React bundle bakes the API URL in at build time. Override it via the build arg:
+
+```bash
+REACT_APP_API_URL=https://api.example.com docker compose build frontend
+```
+
+Or set `REACT_APP_API_URL` in your `.env` file before running `docker compose build`.
+
 
 ### 1. Clone the Repository
 

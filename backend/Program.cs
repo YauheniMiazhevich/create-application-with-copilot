@@ -77,15 +77,23 @@ builder.Services.AddAuthentication()
 });
 
 // Configure CORS
+// Allowed origins are read from configuration (AllowedOrigins array).
+// Override via env var:  AllowedOrigins__0=http://your-frontend-host
+var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()
+    ?? ["http://localhost:3000"];
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        policy.WithOrigins("http://localhost:3000")
+        policy.WithOrigins(allowedOrigins)
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
 });
+
+// Health checks
+builder.Services.AddHealthChecks();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -99,6 +107,10 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     try
     {
+        // Apply any pending EF migrations automatically (safe to call when up-to-date)
+        var dbContext = services.GetRequiredService<ApplicationDbContext>();
+        await dbContext.Database.MigrateAsync();
+
         await DbSeeder.SeedRolesAndAdminAsync(services);
         await DbSeeder.SeedMockDataAsync(services);
     }
@@ -116,7 +128,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// HTTPS redirection is disabled by default in containers (TLS is terminated at the proxy).
+// Set HTTPS_REDIRECT_ENABLED=true to enable it (e.g., for local HTTPS dev outside Docker).
+if (builder.Configuration.GetValue<bool>("HTTPS_REDIRECT_ENABLED"))
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseCors("AllowReactApp");
 
@@ -124,5 +141,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 app.Run();

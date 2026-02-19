@@ -1,0 +1,28 @@
+# This file is used when building with context=. and dockerfile=backend/Dockerfile
+
+# Build outputs
+backend/bin/
+backend/obj/
+backend.Tests/bin/
+backend.Tests/obj/
+
+# Environment / secrets
+backend/.env
+backend/.env.*
+backend/appsettings.Development.json
+
+# IDE and OS
+.vscode/
+.idea/
+**/*.user
+**/*.suo
+.DS_Store
+Thumbs.db
+.git/
+.gitignore
+
+# Frontend (not needed for backend build)
+frontend/
+
+# Logs
+**/*.log
