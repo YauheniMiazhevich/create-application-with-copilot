@@ -1,0 +1,128 @@
+.property-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.property-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border: 2px solid #667eea;
+}
+
+.property-card:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+.property-card-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.property-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.property-card-image-loading {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.property-card-content {
+  padding: 20px;
+}
+
+.property-card-type {
+  margin: 0 0 12px 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.property-card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.property-card-details p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.property-card-location {
+  font-weight: 600;
+  color: #333;
+  font-size: 15px;
+}
+
+.property-card-price {
+  font-weight: 700;
+  color: #667eea;
+  font-size: 16px;
+}
+
+.property-card-delete {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, background 0.2s;
+  z-index: 10;
+}
+
+.property-card-delete:hover {
+  transform: scale(1.1);
+  background: #ff4444;
+}
+
+.property-card-delete:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .property-card-image {
+    height: 180px;
+  }
+
+  .property-card-content {
+    padding: 16px;
+  }
+
+  .property-card-type {
+    font-size: 20px;
+  }
+}
