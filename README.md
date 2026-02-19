@@ -50,6 +50,7 @@ Focus on:
 - Divide a task in a subtask as much as you can before prompting it
 - Always try to provide more specific information
 - Create a custom instructions that describe project context, rules, conventions etc (optional: apply community approved instructions)
+
 Avoid:
 - Run prompts without custom instructions
 - Prompting a hard task that easily divides into subtasks
