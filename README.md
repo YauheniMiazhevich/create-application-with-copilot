@@ -36,6 +36,11 @@ There are included comments on the context, models/tools
  - [Frontend logic\UI](./PromptExamples/PromptExample4.md)
  - [Docker](./PromptExamples/PromptExample5.md)
 
+ Locally installed MCP
+  - [NetContextServer](https://github.com/willibrandon/NetContextServer) to provide more context to AI assistant for accurate and better code suggestions
+  - GitHub MCP Server - to integrate AI agent
+  - [React mcp server](https://github.com/kalivaraprasad-gonapa/react-mcp) - allowing agents/UI assistant to build/create react app, manage npm packages and other stuff
+
 # 3. Insights
 
 ## Summary (observations and learnings)
